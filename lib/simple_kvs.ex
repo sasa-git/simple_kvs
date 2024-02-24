@@ -20,14 +20,26 @@ defmodule SimpleKVS do
   end
 
   # API兼コールバック
+  @doc """
+  start SimpleKVS if not started.
+  """
   def start_link(state \\ %{}) do
     GenServer.start_link(__MODULE__, state, name: :kvs)
   end
 
   # API
+  @doc """
+  get keys
+  """
   def keys, do: GenServer.call(:kvs, :keys)
 
+  @doc """
+  look up for key
+  """
   def lookup(key), do: GenServer.call(:kvs, {:lookup, key})
 
+  @doc """
+  store key/value
+  """
   def store(key, value), do: GenServer.cast(:kvs, {:store, key, value})
 end
